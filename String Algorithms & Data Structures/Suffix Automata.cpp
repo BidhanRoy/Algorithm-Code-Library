@@ -38,7 +38,7 @@ class SuffixAutomata {
 		++sz;
 	}
 
-	void addChar (char c) {
+	void addChar ( char c ) {
 		int cur = sz++;
 		mem( Pool[cur].next , -1 );
 		Pool[cur].len = Pool[last].len + 1;
