@@ -8,6 +8,7 @@ class SuffixAutomata {
 		int firstPos;
 		bool isClone;
 		vector<int> backLink;
+		
 		bool has ( char ch ) {
 			return next[ charToInt(ch) ] != -1;
 		}
@@ -16,10 +17,10 @@ class SuffixAutomata {
 	int sz, last;
 	vector< state > Pool; 
 
-	void getAllOccurrence (int v, int P_length , vector<int> &ret ) {
-		if (! Pool[v].isClone) ret.pb( Pool[v].firstPos - P_length + 1 );
-		for (size_t i=0; i<Pool[v].backLink.size(); ++i)
-			getAllOccurrence (Pool[v].backLink[i], P_length, ret);
+	void getAllOccurrence ( int v , int P_length , vector<int> &ret ) {
+		if ( !Pool[v].isClone ) ret.pb( Pool[v].firstPos - P_length + 1 );
+		for ( size_t i = 0; i < Pool[v].backLink.size(); i++ )
+			getAllOccurrence ( Pool[v].backLink[i] , P_length , ret);
 	}
 
 	public :
@@ -29,7 +30,7 @@ class SuffixAutomata {
 	}
 
 	void initialize(){
-		rep(i,sz) Pool[i].backLink.clr, Pool[i].isClone = false, Pool[i].link = -1, Pool[i].len = 0;
+		rep( i , sz ) Pool[i].backLink.clr, Pool[i].isClone = false, Pool[i].link = -1, Pool[i].len = 0;
 		sz = last = 0;
 		Pool[0].len = 0;
 		Pool[0].link = -1;
@@ -44,22 +45,21 @@ class SuffixAutomata {
 		Pool[cur].firstPos = Pool[cur].len - 1;
 		Pool[cur].isClone = false;
 		int p;
-		for (p=last; p!=-1 && !Pool[p].has(c); p=Pool[p].link) Pool[p].next[ charToInt(c) ] = cur;
-		if (p == -1) Pool[cur].link = 0;
+		for ( p = last; p != -1 && !Pool[p].has(c) ; p = Pool[p].link ) Pool[p].next[ charToInt(c) ] = cur;
+		if ( p == -1 ) Pool[cur].link = 0;
 		else {
 			int q = Pool[p].next[ charToInt(c) ];
-			if (Pool[p].len + 1 == Pool[q].len)
-				Pool[cur].link = q;
+			if ( Pool[p].len + 1 == Pool[q].len ) Pool[cur].link = q;
 			else {
 				int clone = sz++;
-				mem(Pool[clone].next,-1);
+				mem( Pool[clone].next , -1 );
 				Pool[clone].len = Pool[p].len + 1;
 				Pool[clone].firstPos = Pool[p].firstPos;
 				Pool[clone].isClone = true;
-				memcpy(Pool[clone].next, Pool[q].next, sizeof (Pool[q].next));
+				memcpy( Pool[clone].next , Pool[q].next , sizeof (Pool[q].next) );
 				Pool[clone].link = Pool[q].link;
-				for (; p!=-1 && Pool[p].next[charToInt(c)]==q; p=Pool[p].link)
-					Pool[p].next[charToInt(c)] = clone;
+				for ( ; p != -1 && Pool[p].next[charToInt(c)] == q; p = Pool[p].link )
+					Pool[p].next[ charToInt(c) ] = clone;
 				Pool[q].link = Pool[cur].link = clone;
 			}
 		}
@@ -67,22 +67,22 @@ class SuffixAutomata {
 	}
 
 	void construct( string &str ){
-		for( int i=0; i<sz(str); i++ ) addChar(str[i]);
+		rep( i , sz(str) ) addChar(str[i]);
 		for( int v=1; v<sz; v++ ) {
 			if( Pool[v].link != -1 )
-			Pool[ Pool[v].link ].backLink.pb(v);
+			Pool[ Pool[v].link ].backLink.pb( v );
 		}
 	}
 
 	int findState ( string &pattern ) {
 		int now = 0, length = 0;
-		for( int i=0; i<sz(pattern); i++ ){
+		for( int i=0; i < sz(pattern); i++ ) {
 			char ch = pattern[i];
 			while( now && !Pool[now].has( ch ) ) {
 				now = Pool[now].link;
 				length = Pool[now].len;
 			}
-			if(Pool[now].has(ch)){
+			if( Pool[now].has(ch) ){
 				now = Pool[now].next[ch-'a'];
 				length++;
 			}
@@ -90,7 +90,7 @@ class SuffixAutomata {
 		return ( length == sz(pattern) ? now : -1 );
 	}
 
-	vector<int> getAllOccurrence( string &pattern ){
+	vector<int> getAllOccurrence( string &pattern ) {
 		vector<int> ret;
 		int v = findState( pattern );
 		if( v == -1 ) return ret;
