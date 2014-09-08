@@ -25,16 +25,16 @@ class SuffixAutomata {
 
 	public :
 
-	SuffixAutomata( int maxlength ){
+	SuffixAutomata( int maxlength ) {
 		Pool = vector<state> ( maxlength * 2 );
 	}
 
-	void initialize(){
+	void initialize() {
 		rep( i , sz ) Pool[i].backLink.clr, Pool[i].isClone = false, Pool[i].link = -1, Pool[i].len = 0;
 		sz = last = 0;
 		Pool[0].len = 0;
 		Pool[0].link = -1;
-		mem(Pool[sz].next,-1);
+		mem( Pool[sz].next , -1 );
 		++sz;
 	}
 
@@ -66,7 +66,7 @@ class SuffixAutomata {
 		last = cur;
 	}
 
-	void construct( string &str ){
+	void construct ( string &str ) {
 		rep( i , sz(str) ) addChar(str[i]);
 		for( int v=1; v<sz; v++ ) {
 			if( Pool[v].link != -1 )
@@ -76,7 +76,7 @@ class SuffixAutomata {
 
 	int findState ( string &pattern ) {
 		int now = 0, length = 0;
-		for( int i=0; i < sz(pattern); i++ ) {
+		rep( i , sz( pattern ) ) {
 			char ch = pattern[i];
 			while( now && !Pool[now].has( ch ) ) {
 				now = Pool[now].link;
@@ -90,7 +90,7 @@ class SuffixAutomata {
 		return ( length == sz(pattern) ? now : -1 );
 	}
 
-	vector<int> getAllOccurrence( string &pattern ) {
+	vector<int> getAllOccurrence ( string &pattern ) {
 		vector<int> ret;
 		int v = findState( pattern );
 		if( v == -1 ) return ret;
