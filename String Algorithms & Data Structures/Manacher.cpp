@@ -18,14 +18,14 @@ int call(char *inp,char *str,int *F,vector< pair<int,int> > &vec){
     }
     str[len]='\0';
     int c=0,r=0,ans=0;
-    for(int i=1; i&lt;len-1; i++){
+    for(int i=1; i < len-1; i++){
         int _i=c-(i-c);
-        if(r&gt;i) F[i]=min(F[_i],r-i);
+        if(r > i) F[i]=min(F[_i],r-i);
         else F[i]=0;
-        while(i-1-F[i]&gt;=0 &amp;&amp; str[i-1-F[i]]==str[i+1+F[i]]) {
+        while(i-1-F[i]>=0 && str[i-1-F[i]]==str[i+1+F[i]]) {
             F[i]++;
         }
-        if(i+F[i]&gt;r) r=i+F[i],c=i;
+        if(i+F[i] > r) r=i+F[i],c=i;
         ans=max(ans,F[i]);
         vec.push_back(make_pair(i-F[i],i+F[i]));
     }
