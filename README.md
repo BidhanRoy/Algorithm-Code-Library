@@ -1,4 +1,4 @@
 Algorithm-Code-Library
 ======================
 
-Library of my implementations of various algorithm and data-structures
+Library of my implementations of various algorithm and data-structures. Written in C++.
