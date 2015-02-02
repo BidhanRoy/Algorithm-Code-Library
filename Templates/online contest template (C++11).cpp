@@ -2,10 +2,10 @@
  * Bidhan Roy
  * University of Dhaka
  */
- 
+
 using namespace std;
 #include <bits/stdc++.h>
- 
+
 #define rep(i,n) for(auto i=0; i<(n); i++)
 #define mem(x,val) memset((x),(val),sizeof(x));
 #define rite(x) freopen(x,"w",stdout);
@@ -20,7 +20,7 @@ using namespace std;
 #define xx first
 #define yy second
 #define eps 1e-9
- 
+
 typedef long long i64;
 typedef unsigned long long ui64;
 typedef string st;
@@ -32,9 +32,9 @@ typedef set<int> si;
 typedef set<st> ss;
 typedef pair<int,int> pii;
 typedef vector<pii> vpii;
- 
+
 #define mx 0
- 
+
 int main() {
     ios_base::sync_with_stdio(0);
     return 0;
