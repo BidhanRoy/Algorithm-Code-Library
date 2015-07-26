@@ -2,18 +2,18 @@
 
 template < typename F, typename S >
 ostream& operator << ( ostream& os, const pair< F, S > & p ) {
-    return os << "{" << p.first << ", " << p.second << "}";
+    return os << "(" << p.first << ", " << p.second << ")";
 }
 
 template < typename T >
 ostream &operator << ( ostream & os, const vector< T > &v ) {
-    os << "[";
+    os << "{";
     typename vector< T > :: const_iterator it;
     for( it = v.begin(); it != v.end(); it++ ) {
         if( it != v.begin() ) os << ", ";
         os << *it;
     }
-    return os << "]";
+    return os << "}";
 }
 
 template < typename T >
@@ -39,5 +39,3 @@ ostream &operator << ( ostream & os, const map< F, S > &v ) {
 }
 
 #define deb(x) cerr << #x << " = " << x << endl;
-
-/// ********* debug template *********
