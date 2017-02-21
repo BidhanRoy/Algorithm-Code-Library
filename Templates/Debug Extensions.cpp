@@ -1,4 +1,4 @@
-/// ********* debug template bt Bidhan Roy *********
+/// ********* debug template by Bidhan Roy *********
 
 template < typename F, typename S >
 ostream& operator << ( ostream& os, const pair< F, S > & p ) {
